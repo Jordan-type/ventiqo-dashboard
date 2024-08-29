@@ -1,0 +1,23 @@
+import ThemeToggle from '@/components/Layouts/ThemeToggle/theme-toggle';
+import DropdownNotification from "@/components/Layouts/dropdown-notifications"
+import { UserMobileSidebar } from './user-mobile-sidebar';
+import UserHeaderProfileNav from './user-header-profile-nav';
+import { cn } from '@/lib/utils';
+
+
+export default function UserHeader() {
+    return (
+      <header className="sticky inset-x-0 top-0 w-full">
+        <nav className="flex items-center justify-between px-4 py-2 md:justify-end">
+          <div className={cn('block lg:!hidden')}>
+            <UserMobileSidebar />
+          </div>
+          <div className="flex items-center gap-2"> 
+          {/* <UserHeaderProfileNav /> */}
+            <DropdownNotification />   
+            <ThemeToggle />
+          </div>
+        </nav>
+      </header>
+    );
+  }
