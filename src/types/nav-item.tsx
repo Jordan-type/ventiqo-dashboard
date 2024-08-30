@@ -1,4 +1,5 @@
 import { Icons } from "@/components/icons";
+import { TablerIcons } from '@/components/icons';
 
 export interface NavItem {
   title: string;
@@ -16,7 +17,7 @@ export interface UserNavItem {
   href?: string;
   disabled?: boolean;
   external?: boolean;
-  icon?: keyof typeof Icons;
+  icon?: keyof typeof TablerIcons; // Updated to use TablerIcons keys
   label?: string;
   description?: string;
   onClick?: () => void;

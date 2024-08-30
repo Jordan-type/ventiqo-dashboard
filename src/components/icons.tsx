@@ -31,6 +31,34 @@ import {
   X
 } from 'lucide-react';
 
+import {
+  IconApps,
+  IconBarrierBlock,
+  IconBoxSeam,
+  IconChartHistogram,
+  IconChecklist,
+  IconComponents,
+  IconError404,
+  IconExclamationCircle,
+  IconHexagonNumber1,
+  IconHexagonNumber2,
+  IconHexagonNumber3,
+  IconHexagonNumber4,
+  IconHexagonNumber5,
+  IconLayoutDashboard,
+  IconMessages,
+  IconRouteAltLeft,
+  IconServerOff,
+  IconSettings,
+  IconTruck,
+  IconUserShield,
+  IconUsers,
+  IconLock, 
+  IconBrowserCheck,
+  IconBriefcase, 
+} from '@tabler/icons-react'
+
+
 export type Icon = LucideIcon;
 
 export const Icons = {
@@ -115,3 +143,34 @@ export const Icons = {
   twitter: Twitter,
   check: Check
 };
+
+
+export const TablerIcons = {
+  apps: IconApps,
+  barrierBlock: IconBarrierBlock,
+  boxSeam: IconBoxSeam,
+  chartHistogram: IconChartHistogram,
+  checklist: IconChecklist,
+  components: IconComponents,
+  error404: IconError404,
+  exclamationCircle: IconExclamationCircle,
+  hexagonNumber1: IconHexagonNumber1,
+  hexagonNumber2: IconHexagonNumber2,
+  hexagonNumber3: IconHexagonNumber3,
+  hexagonNumber4: IconHexagonNumber4,
+  hexagonNumber5: IconHexagonNumber5,
+  layoutDashboard: IconLayoutDashboard,
+  messages: IconMessages,
+  routeAltLeft: IconRouteAltLeft,
+  serverOff: IconServerOff,
+  settings: IconSettings,
+  truck: IconTruck,
+  userShield: IconUserShield,
+  users: IconUsers,
+  lock: IconLock,
+  calendar: IconBrowserCheck,
+  invites: IconBriefcase
+};
+
+// Export both Icons objects (Lucide and Tabler) if needed
+export type TablerIconsType = typeof TablerIcons;

@@ -7,7 +7,6 @@ import mapboxgl from "mapbox-gl"; // Import Mapbox GL
 import PageContainer from "@/components/Layouts/page-container";
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
-
 import {
   Card,
   CardHeader,
@@ -15,13 +14,17 @@ import {
   CardTitle,
   CardContent,
 } from "@/components/ui/card";
+import { Layout } from "@/components/Layouts/profile-layout/layout";
+import Header from "@/components/Layouts/profile-layout/Header";
+import Body from "@/components/Layouts/profile-layout/Body";
+import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 
 // Ensure the environment variable is properly defined
 const mapboxToken = process.env.NEXT_PUBLIC_MAP_BOX_ACCESS_TOKEN; // Replace with your Mapbox token or process.env.NEXT_PUBLIC_MAPBOX_ACCESS_TOKEN;
 
 if (!mapboxToken) {
   throw new Error(
-    "Mapbox access token is not defined in the environment variables."
+    "Mapbox access token is not defined in the environment variables.",
   );
 }
 
@@ -81,9 +84,7 @@ const User = () => {
 
         new mapboxgl.Marker()
           .setLngLat(event.coordinates as [number, number]) // Assert type to satisfy TypeScript
-          .setPopup(
-            new mapboxgl.Popup({ offset: 25 }).setText(event.title)
-          ) // Optional: Add popup with event title
+          .setPopup(new mapboxgl.Popup({ offset: 25 }).setText(event.title)) // Optional: Add popup with event title
           .addTo(map);
       });
 
@@ -93,61 +94,31 @@ const User = () => {
 
   return (
     <PageContainer scrollable={true}>
-      <div className="relative">
-        {/* Map Component */}
-        <div ref={mapContainerRef} className="absolute inset-0" />
-
-        {/* Popular Now Section */}
-        <div className="absolute bottom-20 left-20 right-20 z-20">
-          <div className="flex justify-between space-x-6">
-            {events.map((event) => (
-              <div
-                key={event.id}
-                className="w-1/3 bg-white rounded-lg shadow-lg p-4"
-              >
-                <Image
-                  src={event.image}
-                  alt={event.title}
-                  width={300}
-                  height={200}
-                  className="rounded-lg"
-                />
-                <h3 className="mt-4 font-bold">{event.title}</h3>
-                <p className="text-sm text-gray-600">
-                  {event.date} - {event.time}
-                </p>
-                <p className="text-orange-500 mt-2 font-semibold">
-                  {event.price}
-                </p>
-              </div>
-            ))}
-          </div>
-        </div>
-
-        {/* Event Details */}
-        <div className="absolute top-20 right-5 z-30 w-1/3">
-          <Card className="p-6">
-            <CardHeader>
-              <CardTitle className="text-lg font-bold">
-                Electronic Sound with DJ ARMY ft Miss Lexa
-              </CardTitle>
-            </CardHeader>
-            <CardContent>
-              <p className="mt-2 text-sm text-muted">
-                29 Mar, Tuesday | 10:00 PM - End
-              </p>
-              <p className="mt-4 text-sm">
-                We’re celebrating our 30th edition of the California Art
-                Festival in CA this Spring, so join us at the Building Park in
-                California State University from March 29 - 30, 2022...
-              </p>
-            </CardContent>
-            <CardFooter>
-              <Button className="w-full">Get a Ticket</Button>
-            </CardFooter>
-          </Card>
-        </div>
-      </div>
+      <Layout>
+        <Header>
+          <h6>Find Events</h6>
+          <div className="ml-auto flex items-center space-x-4"></div>
+        </Header>
+        <Body>
+          <Tabs
+            orientation="vertical"
+            defaultValue="overview"
+            className="space-y-4"
+          >
+            <div className="w-full overflow-x-auto pb-2">
+              <TabsList>
+                <TabsTrigger value="overview">Overview</TabsTrigger>
+                <TabsTrigger value="analytics">Analytics</TabsTrigger>
+                <TabsTrigger value="reports">Reports</TabsTrigger>
+                <TabsTrigger value="notifications">Notifications</TabsTrigger>
+              </TabsList>
+            </div>
+            <TabsContent value='overview' className='space-y-4'>
+              {/* map content of the events */}
+            </TabsContent>
+          </Tabs>
+        </Body>
+      </Layout>
     </PageContainer>
   );
 };

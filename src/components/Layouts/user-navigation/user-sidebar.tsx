@@ -2,8 +2,8 @@
 import React, { useState } from "react";
 import Link from "next/link";
 import Image from "next/image";
-import { ChevronLeft } from "lucide-react";
 import { signOut } from "next-auth/react"; 
+import { IconChevronsLeft } from '@tabler/icons-react'
 
 import { UserSidebarDashboardNav } from "@/components/Layouts/user-navigation/user-sidebar-dashboard-nav";
 import { useSidebar } from "@/hooks/useSidebar";
@@ -52,7 +52,7 @@ export default function UserSidebar({ className }: SidebarProps) {
           </svg>
           </Link>
         </div>
-      <ChevronLeft
+      <IconChevronsLeft
         className={cn(
           "absolute -right-3 top-10 z-50  cursor-pointer rounded-full border bg-background text-3xl text-foreground",
           isMinimized && "rotate-180",

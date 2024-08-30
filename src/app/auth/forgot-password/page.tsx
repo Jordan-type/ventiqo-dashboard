@@ -1,61 +1,57 @@
-// pages/auth/forgot-password.tsx
-
 "use client";
 
 import React, { useState } from "react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { useToast } from '@/components/ui/toaster/use-toast';
-import axios from "axios";
+import { Card } from '@/components/ui/card'
+import { ForgotForm } from '@/components/Forms/forgot-form'
+import Link from "next/link";
 
 export default function ForgotPassword() {
-  const [email, setEmail] = useState<string>("");
-  const [loading, setLoading] = useState<boolean>(false);
-  const { toast } = useToast();
-
-  const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
-    e.preventDefault();
-    setLoading(true);
-
-    try {
-      const response = await axios.post("/api/auth/forgot-password", { email });
-      toast({
-        title: "Success",
-        description: "If this email is registered, you will receive a password reset link.",
-        variant: "default",
-      });
-    } catch (error) {
-      console.error("Error sending password reset email:", error);
-      toast({
-        title: "Error",
-        description: "Something went wrong. Please try again later.",
-        variant: "destructive",
-      });
-    } finally {
-      setLoading(false);
-    }
-  };
-
   return (
-    <div className="max-w-md mx-auto mt-10">
-      <h2 className="text-2xl font-bold text-center mb-6">Forgot Password</h2>
-      <form onSubmit={handleSubmit} className="space-y-6">
-        <div>
-          <label className="block mb-2 text-sm font-medium text-gray-700">
-            Email
-          </label>
-          <Input
-            type="email"
-            placeholder="Enter your email"
-            value={email}
-            onChange={(e) => setEmail(e.target.value)}
-            required
-          />
+    <>
+      <div className='container grid h-svh flex-col items-center justify-center bg-primary-foreground lg:max-w-none lg:px-0'>
+        <div className='mx-auto flex w-full flex-col justify-center space-y-2 sm:w-[480px] lg:p-8'>
+          <div className='mb-4 flex items-center justify-center'>
+            <svg
+              xmlns='http://www.w3.org/2000/svg'
+              viewBox='0 0 24 24'
+              fill='none'
+              stroke='currentColor'
+              strokeWidth='2'
+              strokeLinecap='round'
+              strokeLinejoin='round'
+              className='mr-2 h-6 w-6'
+            >
+              <path d='M15 6v12a3 3 0 1 0 3-3H6a3 3 0 1 0 3 3V6a3 3 0 1 0-3 3h12a3 3 0 1 0-3-3' />
+            </svg>
+            <h1 className='text-xl font-medium'>Shadcn Admin</h1>
+          </div>
+          <Card className='p-6'>
+            <div className='mb-2 flex flex-col space-y-2 text-left'>
+              <h1 className='text-md font-semibold tracking-tight'>
+                Forgot Password
+              </h1>
+              <p className='text-sm text-muted-foreground'>
+                Enter your registered email and <br /> we will send you a link
+                to reset your password.
+              </p>
+            </div>
+            <ForgotForm />
+            <p className='mt-4 px-8 text-center text-sm text-muted-foreground'>
+              Don't have an account?{' '}
+              <Link
+                href='/auth/signup'
+                className='underline underline-offset-4 hover:text-primary'
+              >
+                Sign up
+              </Link>
+              .
+            </p>
+          </Card>
         </div>
-        <Button type="submit" className="w-full" disabled={loading}>
-          {loading ? "Sending..." : "Send Reset Link"}
-        </Button>
-      </form>
-    </div>
-  );
+      </div>
+    </>
+  )
 }

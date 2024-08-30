@@ -1,108 +1,55 @@
 "use client";
 
 import React, { useState } from "react";
-import { useRouter, useSearchParams } from "next/navigation";
-import { Button } from "@/components/ui/button";
-import { Input } from "@/components/ui/input";
-import {
-  Form,
-  FormField,
-  FormItem,
-  FormLabel,
-  FormControl,
-  FormMessage,
-} from "@/components/ui/form";
-import { zodResolver } from "@hookform/resolvers/zod";
-import { useForm } from "react-hook-form";
-import axios from "axios";
-import { useToast } from '@/components/ui/toaster/use-toast';
-import * as z from "zod";
-import { activateAccount } from "@/config/APIConfig";
+import Link from "next/link";
+import { AccountActivationForm } from "@/components/Forms/account-activation-form"
+import { Card } from "@/components/ui/card";
 
-// Zod schema for form validation
-const formSchema = z.object({
-  activation_code: z.string().nonempty("Activation code is required"),
-});
-
-interface ActivationFormInputs {
-  activation_code: string;
-}
-
-export default function ActivationPage() {
-  const [loading, setLoading] = useState(false);
-  const { toast } = useToast();
-  const router = useRouter(); // Use Next.js router for redirect
-  const searchParams = useSearchParams(); // Hook to access the search parameters
-  const token = searchParams.get("token"); // Get the 'token' from the URL
-
-  const form = useForm<ActivationFormInputs>({
-    resolver: zodResolver(formSchema),
-  });
-
-  const onSubmit = async (data: ActivationFormInputs) => {
-    setLoading(true);
-    try {
-      
-      // Send activation details to backend
-      const response = await activateAccount({
-        activation_code: data.activation_code,
-        activation_token: token,
-      });
-
-
-      if (response?.success) {
-        toast({
-          title: "Activation Successful",
-          description: response.message,
-          variant: "default",
-        });
-        // Redirect to siginin page or handle success case
-      } else {
-        toast({
-          title: "Error",
-          description: response.message || "Activation failed. Please try again.",
-          variant: "destructive",
-        });
-      }
-      // Redirect to the next page or handle further actions
-      router.push(`/auth/signin`);
-    } catch (error) {
-      console.error("Error during activation:", error);
-      toast({
-        title: "Error",
-        description: "Activation failed. Please try again.",
-        variant: "destructive",
-      });
-    } finally {
-      setLoading(false);
-    }
-  };
-
+export default function AccountActivation() {
   return (
-    <div className="max-w-md mx-auto mt-10">
-      <Form {...form}>
-        <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-6">
-          <FormField
-            name="activation_code"
-            control={form.control}
-            render={({ field }) => (
-              <FormItem>
-                <FormLabel>Activation Code</FormLabel>
-                <FormControl>
-                  <Input
-                    placeholder="Enter your activation code"
-                    {...field}
-                  />
-                </FormControl>
-                <FormMessage />
-              </FormItem>
-            )}
-          />
-          <Button type="submit" className="w-full">
-            {loading ? "Activating..." : "Activate Account"}
-          </Button>
-        </form>
-      </Form>
+    <>
+    <div className='container grid h-svh flex-col items-center justify-center bg-primary-foreground lg:max-w-none lg:px-0'>
+      <div className='mx-auto flex w-full flex-col justify-center space-y-2 sm:w-[480px] lg:p-8'>
+        <div className='mb-4 flex items-center justify-center'>
+          <svg
+            xmlns='http://www.w3.org/2000/svg'
+            viewBox='0 0 24 24'
+            fill='none'
+            stroke='currentColor'
+            strokeWidth='2'
+            strokeLinecap='round'
+            strokeLinejoin='round'
+            className='mr-2 h-6 w-6'
+          >
+            <path d='M15 6v12a3 3 0 1 0 3-3H6a3 3 0 1 0 3 3V6a3 3 0 1 0-3 3h12a3 3 0 1 0-3-3' />
+          </svg>
+          <h1 className='text-xl font-medium text-white'>Ventiqo</h1>
+        </div>
+        <Card className='p-6'>
+          <div className='mb-2 flex flex-col space-y-2 text-left'>
+            <h1 className='text-md font-semibold tracking-tight'>
+            Account Activation
+            </h1>
+            <p className='text-sm text-muted-foreground'>
+              Please enter the activation code. <br /> We have sent the
+              activation code to your email.
+            </p>
+          </div>
+          <AccountActivationForm />
+          <p className='mt-4 px-8 text-center text-sm text-muted-foreground'>
+            Haven't received it?{' '}
+            <Link
+              href='/resend-new-code'
+              className='underline underline-offset-4 hover:text-primary'
+            >
+              Resend a new code.
+            </Link>
+            .
+          </p>
+        </Card>
+      </div>
     </div>
+  </>
+
   );
 }

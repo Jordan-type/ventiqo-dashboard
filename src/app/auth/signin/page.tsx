@@ -38,6 +38,17 @@ const SignIn: React.FC = () => {
               Login into your account
             </span>
             <UserSignInForm />
+            
+            {/* remember me */}
+          <div className="flex justify-between items-center space-x-2">
+            <div className="flex items-center space-x-2">
+              
+            </div>
+          </div>
+
+          {/* forgot password and signup */}
+
+
             <p className="px-8 text-center text-sm text-muted-foreground">
               By clicking continue, you agree to our{" "}
               <Link
@@ -54,6 +65,7 @@ const SignIn: React.FC = () => {
                 Privacy Policy
               </Link>
               .
+              
             </p>
           </div>
         </div>

@@ -83,7 +83,6 @@ export default function UserSignUpForm() {
       // Include country in the data
       const { confirm_password, ...userData } = { ...data, country };
       const response = await signUpUser(userData);
-      console.log("Sign-up response:", response);
       const token = response.activationToken; // Assume the token is returned from the API
 
       toast({
@@ -118,7 +117,7 @@ export default function UserSignUpForm() {
   return (
     <>
       <Form {...form}>
-        <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-6">
+        <form onSubmit={form.handleSubmit(onSubmit)} className="w-full space-y-6">
           <div className="grid grid-cols-1 gap-6 md:grid-cols-2">
             <FormField
               name="first_name"
