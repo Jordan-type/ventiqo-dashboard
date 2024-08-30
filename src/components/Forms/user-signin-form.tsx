@@ -146,14 +146,20 @@ export default function UserSignInForm() {
               </FormItem>
             )}
           />
-          
+
           {/* Forgot Password and Sign Up Links */}
-          <div className="flex justify-between items-center">
-            <Link href="/auth/forgot-password" className="underline underline-offset-4 hover:text-primary">
+          <div className="flex items-center justify-between text-sm">
+            <Link
+              href="/auth/forgot-password"
+              className="underline underline-offset-4 hover:text-primary"
+            >
               Forgot Password?
             </Link>
-            <Link href="/auth/signup" className="underline underline-offset-4 hover:text-primary">
-              Don't have an account? Sign Up
+            <Link
+              href="/auth/signup"
+              className="underline underline-offset-4 hover:text-primary"
+            >
+              Don&apos;t have an account? Sign Up
             </Link>
           </div>
 
