@@ -8,7 +8,7 @@ export default function UnauthorisedError() {
       <div className='m-auto flex h-full w-full flex-col items-center justify-center gap-2'>
         <h1 className='text-[7rem] font-bold leading-tight'>401</h1>
         <span className='font-medium'>
-          Oops! You don't have permission to access this page.
+          Oops! You don&apos;t have permission to access this page.
         </span>
         <p className='text-center text-muted-foreground'>
           It looks like you tried to access a resource that requires proper
