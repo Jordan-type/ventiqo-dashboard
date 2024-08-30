@@ -5,10 +5,15 @@ import { usePathname } from 'next/navigation'; // Ensure this is correctly impor
 import { Dispatch, SetStateAction } from 'react';
 
 import { cn } from '@/lib/utils';
-import { Icons } from '@/components/icons';
+import { TablerIcons } from '@/components/icons';
 import { UserNavItem } from '@/types/nav-item';
 import { useSidebar } from '@/hooks/useSidebar';
 import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from '@/components/ui/tooltip';
+
+// Type guard to check if a key exists in TablerIcons
+const isTablerIcon = (icon: string): icon is keyof typeof TablerIcons => {
+  return icon in TablerIcons;
+};
 
 interface DashboardNavProps {
   items: UserNavItem[];
@@ -32,7 +37,8 @@ export function UserSidebarDashboardNav({
     <nav className="grid items-start gap-2">
       <TooltipProvider>
         {items.map((item, index) => {
-          const Icon = Icons[item.icon || 'arrowRight'];
+          // Check if the icon is a valid Tabler icon
+          const IconComponent = item.icon && isTablerIcon(item.icon) ? TablerIcons[item.icon] : TablerIcons['apps']; // Fallback to 'apps' if icon is invalid
           return (
             item.href && (
               <Tooltip key={index}>
@@ -52,7 +58,7 @@ export function UserSidebarDashboardNav({
                       if (setOpen) setOpen(false);
                     }}
                   >
-                    <Icon className={`ml-3 size-5 flex-none`} />
+                    {IconComponent && <IconComponent className={`ml-3 size-5 flex-none`} />} {/* Safely render IconComponent */}
 
                     {isMobileNav || (!isMinimized && !isMobileNav) ? (
                       <span className="mr-2 truncate">{item.title}</span>

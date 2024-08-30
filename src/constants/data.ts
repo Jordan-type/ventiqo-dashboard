@@ -1,4 +1,4 @@
-import { NavItem } from '@/types/nav-item';
+import { NavItem, UserNavItem } from '@/types/nav-item';
 import { signOut } from "next-auth/react"; 
 
 export type User = {
@@ -9,6 +9,7 @@ export type User = {
   verified: boolean;
   status: string;
 };
+
 export const users: User[] = [
   {
     id: 1,
@@ -151,42 +152,49 @@ export const navItems: NavItem[] = [
 ];
 
 
-export const userNavItems: NavItem[] = [
+export const userNavItems: UserNavItem[] = [
   {
     title: 'Dashboard',
-    href: '/user/dashboard',
-    icon: 'dashboard',
+    href: '/user',
+    icon: 'layoutDashboard', // Matches TablerIcons key
     label: 'Dashboard'
   },
   {
     title: 'Search Events',
-    href: '/user/search/events',
-    icon: 'user',
-    label: 'user'
+    href: '/user/events',
+    icon: 'users', // Updated to match a valid TablerIcons key
+    label: 'events'
   },
   {
     title: 'Inbox',
     href: '/user/inbox',
-    icon: 'user',
+    icon: 'messages', // Updated to match a valid TablerIcons key
     label: 'inbox'
   },
   {
-    title: 'My Calender',
-    href: '/user/my/calender',
-    icon: 'user',
-    label: 'calender'
+    title: 'Invites',
+    href: '/user/invites',
+    icon: 'invites', // Updated to match a valid TablerIcons key
+    label: 'invites'
+  },
+  {
+    title: 'My Calendar',
+    href: '/user/my/calendar',
+    icon: 'calendar', // Updated to match a valid TablerIcons key
+    label: 'calendar'
   },
   {
     title: 'Settings',
     href: '/user/settings',
-    icon: 'settings',
+    icon: 'settings', // Valid icon name in TablerIcons
     label: 'settings'
   },
   {
     title: 'Sign Out',
     href: '#', // Use '#' because we will handle logout via onClick
-    icon: 'logout',
+    icon: 'lock', // Updated to match a valid TablerIcons key for a lock or sign-out symbol
     label: 'signout',
     onClick: () => signOut({ callbackUrl: "/" }), // Add signOut function here
   }
 ];
+
