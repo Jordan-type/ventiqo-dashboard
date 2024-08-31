@@ -1,28 +1,32 @@
-
 import Image from "next/image";
 import { Metadata } from "next";
 import Link from "next/link";
-import PageContainer from '@/components/Layouts/page-container';
+import PageContainer from "@/components/Layouts/page-container";
 import Breadcrumb from "@/components/Breadcrumbs/Breadcrumb";
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
-  import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
-
+import {
+  Card,
+  CardContent,
+  CardDescription,
+  CardHeader,
+  CardTitle,
+} from "@/components/ui/card";
+import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 
 export const metadata: Metadata = {
-    title: "Admin",
-    description: "Admin page",
+  title: "Admin",
+  description: "Admin page",
 };
 
 const Admin = () => {
-    return (
-        <PageContainer scrollable={true}>
-            <div className="space-y-2">
-                <div className="flex items-center justify-between space-y-2">
-                    <h2 className="text-2xl font-bold tracking-tight">
-                        Hi Jordan, Welcome back 👋
-                    </h2>
-                </div>
-                <Tabs defaultValue="overview" className="space-y-4">
+  return (
+    <PageContainer scrollable={true}>
+      <div className="space-y-2">
+        <div className="flex items-center justify-between space-y-2">
+          <h2 className="text-2xl font-bold tracking-tight">
+            Hi Jordan, Welcome back 👋
+          </h2>
+        </div>
+        <Tabs defaultValue="overview" className="space-y-4">
           <TabsList>
             <TabsTrigger value="overview">Overview</TabsTrigger>
             <TabsTrigger value="analytics" disabled>
@@ -134,9 +138,7 @@ const Admin = () => {
               </Card>
             </div>
             <div className="grid grid-cols-1 gap-4 md:grid-cols-2 lg:grid-cols-7">
-              <div className="col-span-4">
-                {/* <BarGraph /> */}
-              </div>
+              <div className="col-span-4">{/* <BarGraph /> */}</div>
               <Card className="col-span-4 md:col-span-3">
                 <CardHeader>
                   <CardTitle>Recent Sales</CardTitle>
@@ -144,22 +146,18 @@ const Admin = () => {
                     You made 265 sales this month.
                   </CardDescription>
                 </CardHeader>
-                <CardContent>
-                  {/* <RecentSales /> */}
-                </CardContent>
+                <CardContent>{/* <RecentSales /> */}</CardContent>
               </Card>
-              <div className="col-span-4">
-                {/* <AreaGraph /> */}
-              </div>
+              <div className="col-span-4">{/* <AreaGraph /> */}</div>
               <div className="col-span-4 md:col-span-3">
                 {/* <PieGraph /> */}
               </div>
             </div>
           </TabsContent>
         </Tabs>
-            </div>
-        </PageContainer>
-    );
-}
+      </div>
+    </PageContainer>
+  );
+};
 
 export default Admin;
