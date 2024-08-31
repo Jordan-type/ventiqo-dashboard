@@ -6,6 +6,7 @@ import { useRouter } from "next/navigation";
 import { useForm } from "react-hook-form";
 import * as z from "zod";
 import axios from "axios";
+import Link from "next/link";
 
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
@@ -216,7 +217,23 @@ export default function UserSignUpForm() {
             )}
           />
 
-          <Button type="submit" className="w-full">
+                    {/* Forgot Password and Sign Up Links */}
+                    <div className="flex items-center justify-between text-sm">
+            <Link
+              href="/auth/forgot-password"
+              className="underline underline-offset-4 hover:text-primary"
+            >
+              Forgot Password?
+            </Link>
+            <Link
+              href="/auth/signin"
+              className="underline underline-offset-4 hover:text-primary"
+            >
+              Already have an account? Sign In
+            </Link>
+          </div>
+
+          <Button disabled={loading} type="submit" className="w-full">
             {loading ? "Creating account..." : "Create account"}
           </Button>
         </form>
