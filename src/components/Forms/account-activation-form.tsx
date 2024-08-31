@@ -15,7 +15,6 @@ import {
 import { Input } from "@/components/ui/input";
 import { PinInput, PinInputField } from "@/components/ui/pin-input";
 import { Separator } from "@/components/ui/separator";
-import axios from "axios";
 import { useToast } from "@/components/ui/toaster/use-toast";
 import { activateAccount } from "@/config/APIConfig";
 
@@ -67,7 +66,7 @@ export function AccountActivationForm({
           title: "Error",
           description:
             response.message || "Activation failed. Please try again.",
-          variant: "destructive",
+            variant: "destructive",
         });
       }
       // Redirect to the next page or handle further actions
@@ -85,45 +84,43 @@ export function AccountActivationForm({
   };
 
   return (
-    <div className={cn("grid gap-6", className)} {...props}>
-      <Form {...form}>
-        <form onSubmit={form.handleSubmit(onSubmit)}>
-          <div className="grid gap-2">
-            <FormField
-              control={form.control}
-              name="activation_code"
-              render={({ field }) => (
-                <FormItem className="space-y-1">
-                  <FormControl>
-                    <PinInput
-                      {...field}
-                      className="flex h-10 justify-between"
-                      onComplete={() => setDisabledBtn(false)}
-                      onIncomplete={() => setDisabledBtn(true)}
-                    >
-                      {Array.from({ length: 7 }, (_, i) => {
-                        if (i === 3)
-                          return <Separator key={i} orientation="vertical" />;
-                        return (
-                          <PinInputField
-                            key={i}
-                            component={Input}
-                            className={`${form.getFieldState("activation_code").invalid ? "border-red-500" : ""}`}
-                          />
-                        );
-                      })}
-                    </PinInput>
-                  </FormControl>
-                  <FormMessage />
-                </FormItem>
-              )}
-            />
-            <Button className="w-full" disabled={loading}>
-              {loading ? "Activating..." : "Activate Account"}
-            </Button>
-          </div>
-        </form>
-      </Form>
-    </div>
+    <Form {...form}>
+      <form onSubmit={form.handleSubmit(onSubmit)} className="w-full space-y-6">
+        <div className="grid gap-2">
+          <FormField
+            control={form.control}
+            name="activation_code"
+            render={({ field }) => (
+              <FormItem className="space-y-1">
+                <FormControl>
+                  <PinInput
+                    {...field}
+                    className="flex h-10 justify-between"
+                    onComplete={() => setDisabledBtn(false)}
+                    onIncomplete={() => setDisabledBtn(true)}
+                  >
+                    {Array.from({ length: 7 }, (_, i) => {
+                      if (i === 3)
+                        return <Separator key={i} orientation="vertical" />;
+                      return (
+                        <PinInputField
+                          key={i}
+                          component={Input}
+                          className={`${form.getFieldState("activation_code").invalid ? "border-red-500" : ""}`}
+                        />
+                      );
+                    })}
+                  </PinInput>
+                </FormControl>
+                <FormMessage />
+              </FormItem>
+            )}
+          />
+        </div>
+        <Button disabled={loading} type="submit" className="w-full">
+          {loading ? "Activating..." : "Activate Account"}
+        </Button>
+      </form>
+    </Form>
   );
 }

@@ -65,7 +65,7 @@ export default function UserSignInForm() {
         router.push("/user");
         break;
       case "Admin":
-        router.push("/admin/dashboard");
+        router.push("/admin");
         break;
       case "Organizer":
         router.push("/organizer/dashboard");
