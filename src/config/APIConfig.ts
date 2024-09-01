@@ -1,4 +1,4 @@
-import { signIn } from "next-auth/react";
+import { getSession, signIn } from "next-auth/react";
 import { VentiqoBackendAPI } from "@/constants/ventiqo-backend-api";
 
 // data types
@@ -22,28 +22,7 @@ interface dataSignUpUser {
   password: string;
 }
 
-// create event
-// title:Fall Harvest Music Jam 6
-// date:2024-09-22T19:00:00.000Z
-// startTime:19:00
-// endTime:23:00
-// timeZone:EAT
-// aboutEvent:A jam celebrating fall with music, food, and fun activities.
-// tagline:The most vibrant event this fall!
-// keypoint:[Live music, Gourmet food trucks, Firework finale]
-// venueName:Nairobi
-// categoryName:Music
-// subcatergoryName:Concerts
-// status:Draft
-// currentBookings:0
-// promoCode:FALL2024
-// discount:12
-// featured:true
-// registrationRequired:true
-// subCounty:Central Park
-// county:Nairobi
-// country:Kenya
-
+// this for creating events
 interface dataEventDetails {
   title: string;
   date: string;
@@ -66,6 +45,26 @@ interface dataEventDetails {
   county: string;
   country: string;
   events_image: string; // image
+}
+
+// getting all events api
+interface GetAllEventsResponse {
+  message: string;
+  success: boolean;
+  events: {
+    data: any[]; // You may define a more specific type if you have a consistent structure
+    _links: any;
+    _meta: {
+      total: number;
+      totalPages: number;
+      currentPage: number;
+      perPage: number;
+      hasNextPage: boolean;
+      hasPrevPage: boolean;
+      nextPage: any;
+      prevPage: any;
+    };
+  };
 }
 
 // {
@@ -127,6 +126,62 @@ interface dataTicketsCategories {
     discount: number;
   }[];
 }
+
+// Function to fetch with automatic token handling
+export const fetchWithToken = async (url: string, options: RequestInit = {}) => {
+  let session = await getSession();
+  let accessToken = session?.accessToken;
+
+  if (!accessToken) {
+    await refreshAccessToken();
+    session = await getSession(); // Re-fetch session after refreshing token
+    accessToken = session?.accessToken;
+  }
+
+  const response = await fetch(url, {
+    ...options,
+    headers: {
+      ...options.headers,
+      'Authorization': `Bearer ${accessToken}`,
+    },
+  });
+
+  if (response.status === 401) { // Access token expired
+    await refreshAccessToken();
+    session = await getSession(); // Re-fetch session after refreshing token
+    accessToken = session?.accessToken;
+    // Retry the original request
+    return fetch(url, {
+      ...options,
+      headers: {
+        ...options.headers,
+        'Authorization': `Bearer ${accessToken}`,
+      },
+    });
+  }
+
+  return response;
+};
+
+// Helper function to refresh access token
+const refreshAccessToken = async () => {
+  const response = await fetch(`${VentiqoBackendAPI}/auth/refresh-token`, {
+    method: 'GET',
+    credentials: 'include', // This ensures cookies are sent with the request
+  });
+
+  console.log(
+    `Refresh token response: ${response.status} ${response.statusText} ${response.url}`
+  )
+
+  if (response.ok) {
+    const data = await response.json();
+    await signIn('credentials', { accessToken: data.accessToken }); // Update session with new access token
+  } else {
+    throw new Error('Unable to refresh access token');
+  }
+};
+
 
 // signin user
 export const signInUser = async (
@@ -272,5 +327,29 @@ export const addTicketsCategories = async (
     return data;
   } catch (error) {
     console.log(error);
+  }
+};
+
+
+// Function to get all events
+export const getAllEvents = async (): Promise<GetAllEventsResponse | undefined> => {
+  try {
+    const res = await fetch(`${VentiqoBackendAPI}/events/all/events`, {
+      method: "GET",
+      headers: {
+        "Content-Type": "application/json",
+      },
+    });
+    
+    if (!res.ok) {
+      throw new Error(`Error fetching events: ${res.statusText}`);
+    }
+
+    const data: GetAllEventsResponse = await res.json();
+    console.log("All events fetched successfully:", data);
+    return data;
+  } catch (error) {
+    console.error("Error fetching all events:", error);
+    // Handle error (e.g., show notification to the user)
   }
 };

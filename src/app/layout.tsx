@@ -25,11 +25,12 @@ export default function RootLayout({
     setTimeout(() => setLoading(false), 1000);
   }, []);
 
+  // overflow-hidden removed it
 
   return (
     <html lang="en">
       <body 
-       className={`${inter.className} overflow-hidden `}
+       className={`${inter.className}`} 
        suppressHydrationWarning={true}>
         <Providers>
           <Toaster />

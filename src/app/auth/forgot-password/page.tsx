@@ -4,7 +4,7 @@ import React, { useState } from "react";
 import Link from "next/link";
 import Image from "next/image";
 
-import UserForgotPasswordForm from "@/components/Forms/user-forgot-password-form";
+import UserForgotPasswordForm from "@/components/Forms/AuthForms/user-forgot-password-form";
 
 export default function ForgotPassword() {
   return (

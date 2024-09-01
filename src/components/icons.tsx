@@ -28,8 +28,24 @@ import {
   User,
   User2Icon,
   UserX2Icon,
-  X
+  X,
+  Home,
+  LineChart,
+  ListFilter,
+  MoreHorizontal,
+  Package,
+  Package2,
+  PanelLeft,
+  PlusCircle,
+  Search,
+  ShoppingCart,
+  Users2,
+  Ticket,
+  UsersRound,
+  Lock,
 } from 'lucide-react';
+
+
 
 import {
   IconApps,
@@ -89,6 +105,20 @@ export const Icons = {
   sun: SunMedium,
   moon: Moon,
   laptop: Laptop,
+  home: Home,
+  lineChart: LineChart,
+  listFilter: ListFilter,
+  moreHorizontal: MoreHorizontal,
+  package: Package,
+  package2: Package2,
+  panelLeft: PanelLeft,
+  plusCircle: PlusCircle,
+  search: Search,
+  shoppingCart: ShoppingCart,
+  users2: Users2,
+  lock: Lock,
+  ticket: Ticket,
+  usersRound: UsersRound,
   gitHub: ({ ...props }: LucideProps) => (
     <svg
       aria-hidden="true"
@@ -141,9 +171,8 @@ export const Icons = {
   </svg>
   ),
   twitter: Twitter,
-  check: Check
+  check: Check,
 };
-
 
 export const TablerIcons = {
   apps: IconApps,

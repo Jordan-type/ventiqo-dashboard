@@ -1,7 +1,7 @@
 import ThemeToggle from '@/components/Layouts/ThemeToggle/theme-toggle';
 import DropdownNotification from "@/components/Layouts/dropdown-notifications"
-import { MobileSidebar } from './mobile-sidebar';
-import { AdminNav } from './admin-nav';
+import { MobileSidebar } from './admin-mobile-sidebar';
+import { AdminHeaderProfileNav } from './admin-header-profile-nav';
 import { cn } from '@/lib/utils';
 
 
@@ -14,7 +14,7 @@ export default function AdminHeader() {
           </div>
           <div className="flex items-center gap-2"> 
             <DropdownNotification />   
-            <AdminNav />
+            <AdminHeaderProfileNav />
             <ThemeToggle />
           </div>
         </nav>

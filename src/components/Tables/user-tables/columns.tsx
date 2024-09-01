@@ -25,12 +25,20 @@ export const columns: ColumnDef<User>[] = [
     enableHiding: false
   },
   {
-    accessorKey: 'name',
-    header: 'NAME'
+    accessorKey: 'image',
+    header: 'IMAGE'
   },
   {
-    accessorKey: 'company',
-    header: 'COMPANY'
+    accessorKey: 'first_name',
+    header: 'FIRST NAME'
+  },
+  {
+    accessorKey: 'last_name',
+    header: 'LAST NAME'
+  },
+  {
+    accessorKey: 'email',
+    header: 'EMAIL'
   },
   {
     accessorKey: 'role',

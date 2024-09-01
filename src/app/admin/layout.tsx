@@ -1,5 +1,5 @@
-import AdminHeader from '@/components/Layouts/admin-header';
-import Sidebar from '@/components/Layouts/sidebar';
+import AdminHeader from '@/components/Layouts/admin-navigation/admin-header';
+import AdminSidebar from '@/components/Layouts/admin-navigation/admin-sidebar';
 
 import type { Metadata } from 'next';
 
@@ -15,7 +15,7 @@ export default function DashboardLayout({
   }) {
     return (
       <div className="flex">
-        <Sidebar />
+        <AdminSidebar />
         <main className="w-full flex-1 overflow-hidden">
           <AdminHeader />
           {children}

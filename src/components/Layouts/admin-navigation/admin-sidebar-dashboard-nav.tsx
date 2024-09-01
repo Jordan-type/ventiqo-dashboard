@@ -6,7 +6,7 @@ import { cn } from '@/lib/utils';
 import { Icons } from '@/components/icons';
 import { NavItem } from '@/types/nav-item';
 import { useSidebar } from '@/hooks/useSidebar';
-import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from '@/components/ui/tooltip';
+import { Tooltip, TooltipContent, TooltipTrigger, TooltipProvider } from '@/components/ui/tooltip';
 
 interface DashboardNavProps {
     items: NavItem[];
@@ -14,7 +14,7 @@ interface DashboardNavProps {
     isMobileNav?: boolean;
   }
 
-  export function AdminDashboardNav({items, setOpen, isMobileNav = false }: DashboardNavProps) {
+  export function AdminSidebarDashboardNav({items, setOpen, isMobileNav = false }: DashboardNavProps) {
     const path = usePathname();
     const { isMinimized } = useSidebar();
 
