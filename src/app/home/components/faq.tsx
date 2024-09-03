@@ -20,7 +20,7 @@ const Faq: React.FC = () => {
             </div>
             <div className="w-full md:w-1/2">
             <img
-                src="/assets/hero.svg"
+                src="/images/cards/cards-01.png"
                 alt="hero"
                 className="w-full h-full object-cover"
             />

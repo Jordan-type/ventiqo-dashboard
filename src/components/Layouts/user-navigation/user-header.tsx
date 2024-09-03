@@ -1,7 +1,7 @@
 import ThemeToggle from '@/components/Layouts/ThemeToggle/theme-toggle';
 import DropdownNotification from "@/components/Layouts/dropdown-notifications"
 import { UserMobileSidebar } from './user-mobile-sidebar';
-import UserHeaderProfileNav from './user-header-profile-nav';
+import { UserHeaderProfileNav } from './user-header-profile-nav';
 import { cn } from '@/lib/utils';
 
 
@@ -13,8 +13,8 @@ export default function UserHeader() {
             <UserMobileSidebar />
           </div>
           <div className="flex items-center gap-2"> 
-          {/* <UserHeaderProfileNav /> */}
-            <DropdownNotification />   
+            <DropdownNotification />
+            <UserHeaderProfileNav />  
             <ThemeToggle />
           </div>
         </nav>

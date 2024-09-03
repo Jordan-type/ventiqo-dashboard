@@ -15,7 +15,7 @@ import { useState } from "react";
 import { signOut, useSession } from "next-auth/react";
 import Link from "next/link";
 
-export function UserHeaderProfileNav() {
+export function AdminHeaderProfileNav() {
   const { data: session } = useSession();
 
   return (

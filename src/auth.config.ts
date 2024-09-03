@@ -4,8 +4,6 @@ import GoogleProvider from 'next-auth/providers/google';
 import FacebookProvider from "next-auth/providers/facebook";
 import { VentiqoBackendAPI } from "@/constants/ventiqo-backend-api";
 
-// 987550
-
 interface AuthResponse {
   success: boolean;
   message: string;
@@ -149,7 +147,6 @@ const authConfig: NextAuthOptions = {
   pages: {
     signIn: "/auth/signin",
     signOut: "/auth/signout",
-    error: "/general-error",
     verifyRequest: "/auth/verify-request",
   },
 };

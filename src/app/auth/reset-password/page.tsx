@@ -3,7 +3,7 @@
 import React, { useState } from "react";
 import Image from "next/image";
 
-import UserResetPasswordForm from "@/components/Forms/user-reset-password-form";
+import UserResetPasswordForm from "@/components/Forms/AuthForms/user-reset-password-form";
 
 export default function ForgotPassword() {
   return (

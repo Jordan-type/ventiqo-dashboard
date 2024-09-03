@@ -120,34 +120,41 @@ export const navItems: NavItem[] = [
     label: 'Dashboard'
   },
   {
+    title: 'Events',
+    href: '/admin/events', // 
+    icon: 'ticket',
+    label: 'employee'
+  },
+  {
+    title: 'Orders',
+    href: '/admin/order',
+    icon: 'shoppingCart',
+    label: 'orders'
+  },
+  {
     title: 'Users',
     href: '/admin/user',
-    icon: 'user',
+    icon: 'usersRound',
     label: 'user'
   },
   {
     title: 'Employee',
     href: '/admin/employee',
-    icon: 'employee',
+    icon: 'users2',
     label: 'employee'
   },
   {
-    title: 'Profile',
-    href: '/admin/profile',
-    icon: 'profile',
-    label: 'profile'
+    title: 'Setting',
+    href: '/admin/settings',
+    icon: 'settings',
+    label: 'settings'
   },
   {
-    title: 'Kanban',
-    href: '/dashboard/kanban',
-    icon: 'kanban',
-    label: 'kanban'
-  },
-  {
-    title: 'Login',
+    title: 'Sign Out',
     href: '/',
-    icon: 'login',
-    label: 'login'
+    icon: 'lock',
+    label: 'signout',
+    onClick: () => signOut({ callbackUrl: "/" }), // Add signOut function here
   }
 ];
 

@@ -1,4 +1,16 @@
-import React from "react";
+"use client";
+
+import * as React from "react";
+import { cn } from "@/lib/utils";
+import { Button } from "@/components/ui/button";
+import Link from "next/link";
+import Image from "next/image";
+import {
+  DropdownMenu,
+  DropdownMenuContent,
+  DropdownMenuItem,
+  DropdownMenuTrigger,
+} from "@/components/ui/dropdown-menu";
 import { RectangleStackIcon, UserCircleIcon, CommandLineIcon, Squares2X2Icon, XMarkIcon, Bars3Icon } from "@heroicons/react/24/solid";
 
 interface NavItemProps {
@@ -71,16 +83,19 @@ export function Navbar() {
   return (
     <nav
       className={`fixed top-0 z-50 w-full border-0 transition-colors duration-300 ${
-        isScrolling ? "bg-white text-gray-900" : "bg-transparent text-white"
+        isScrolling ? "bg-[#75C9E3]/80 text-white" : "bg-[#75C9E3] text-white"
       }`}
     >
       <div className="container mx-auto flex items-center justify-between px-4 py-4">
-        <div className="text-lg font-bold">
-          Ventiqo
-        </div>
+        <Image
+            src={"/images/logo/ventiqo-white-logo.svg"}
+            alt="Ventiqo Logo"
+            width={40}
+            height={40}
+          />
         <ul
           className={`ml-10 hidden items-center gap-6 lg:flex ${
-            isScrolling ? "text-gray-900" : "text-white"
+            isScrolling ? "text-white" : "text-white"
           }`}
         >
           {NAV_MENU.map(({ name, icon: Icon, href }) => (
@@ -91,52 +106,41 @@ export function Navbar() {
           ))}
         </ul>
         <div className="hidden items-center gap-4 lg:flex">
-          <a href="/auth/signin">
-            <button className={`py-2 px-4 rounded-md ${isScrolling ? "bg-gray-300 text-gray-900" : "bg-transparent text-white"}`}>
-              Log in
-            </button>
-          </a>
-          <a href="/auth/signup" target="_blank">
-            <button className={`py-2 px-4 rounded-md ${isScrolling ? "bg-blue-600 text-white" : "bg-white text-black"}`}>
-              Get Started
-            </button>
-          </a>
+          <Link  href="/auth/signin">
+            Log in
+          </Link>
+          <Link href="/auth/signup" target="_blank">
+            Get Started
+          </Link>
         </div>
-        <button
-          onClick={handleOpen}
-          className="ml-auto inline-block lg:hidden"
-        >
-          {open ? (
-            <XMarkIcon strokeWidth={2} className="h-6 w-6" />
-          ) : (
-            <Bars3Icon strokeWidth={2} className="h-6 w-6" />
-          )}
-        </button>
-      </div>
-      {open && (
-        <div className="container mx-auto mt-4 rounded-lg bg-white px-6 py-5">
-          <ul className="flex flex-col gap-4 text-gray-900">
+        <DropdownMenu>
+          <DropdownMenuTrigger asChild>
+            <Button variant="ghost" onClick={handleOpen} className="lg:hidden">
+              {open ? (
+                <XMarkIcon strokeWidth={2} className="h-6 w-6" />
+              ) : (
+                <Bars3Icon strokeWidth={2} className="h-6 w-6" />
+              )}
+            </Button>
+          </DropdownMenuTrigger>
+          <DropdownMenuContent side="bottom" align="start" className="w-[200px] mt-2">
             {NAV_MENU.map(({ name, icon: Icon, href }) => (
-              <NavItem key={name} href={href}>
-                <Icon className="h-5 w-5" />
+              <DropdownMenuItem key={name}>
+                <Icon className="h-5 w-5 mr-2" />
                 {name}
-              </NavItem>
+              </DropdownMenuItem>
             ))}
-          </ul>
-          <div className="mt-6 flex items-center gap-4">
-            <a href="/auth/signin">
-              <button className="py-2 px-4 rounded-md bg-gray-300 text-gray-900">
+            <div className="mt-4">
+              <Link  href="/auth/signin" className="w-full mb-2">
                 Log in
-              </button>
-            </a>
-            <a href="/auth/signup" target="_blank">
-              <button className="py-2 px-4 rounded-md bg-blue-600 text-white">
+              </Link>
+              <Link  href="/auth/signup" target="_blank" className="w-full">
                 Get Started
-              </button>
-            </a>
-          </div>
-        </div>
-      )}
+              </Link>
+            </div>
+          </DropdownMenuContent>
+        </DropdownMenu>
+      </div>
     </nav>
   );
 }

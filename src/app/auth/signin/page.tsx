@@ -4,12 +4,7 @@ import React, { useState, useEffect, ChangeEvent } from "react";
 import Link from "next/link";
 import Image from "next/image";
 
-import UserSignInForm from "@/components/Forms/user-signin-form";
-
-// export const metadata: Metadata = {
-//   title: "Authentication | TailAdmin - Next.js Dashboard Template",
-//   description: "Authentication page for Ventiqo",
-// };
+import UserSignInForm from "@/components/Forms/AuthForms/user-signin-form";
 
 const SignIn: React.FC = () => {
   return (
