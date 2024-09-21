@@ -3,7 +3,6 @@ import Image from "next/image";
 import { Metadata } from "next";
 import Link from "next/link";
 import PageContainer from '@/components/Layouts/page-container';
-import Breadcrumb from "@/components/Breadcrumbs/Breadcrumb";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
   import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
 

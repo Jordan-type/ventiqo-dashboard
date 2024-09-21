@@ -1,14 +1,13 @@
-import Breadcrumb from '@/components/Breadcrumbs/Breadcrumb';
+import { BreadcrumbWrapper } from '@/components/ui/breadcrumb';
 import PageContainer from '@/components/Layouts/page-container';
-import { UserClient } from '@/components/Tables/user-tables/client';
-import { users } from '@/constants/data';
+import UserClient  from '@/components/Tables/users-tables/client';
 
 export default function page() {
   return (
     <PageContainer scrollable={true}>
       <div className="space-y-2">
-      <Breadcrumb pageName="User" />
-        <UserClient data={users} />
+      <BreadcrumbWrapper pageName="User" />
+        <UserClient />
       </div>
     </PageContainer>
   );

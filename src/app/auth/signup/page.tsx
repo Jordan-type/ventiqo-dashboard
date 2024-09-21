@@ -6,7 +6,7 @@ import Image from "next/image";
 import { useSession } from "next-auth/react";
 import { Metadata } from "next";
 
-import UserSignUpForm from "@/components/Forms/user-signup-form"
+import UserSignUpForm from "@/components/Forms/AuthForms/user-signup-form"
 
 
 // export const metadata: Metadata = {

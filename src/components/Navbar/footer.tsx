@@ -22,10 +22,10 @@ export function Footer() {
         </div>
         <div className="flex flex-col md:flex-row items-center justify-between">
           <a
-            href="https://www.material-tailwind.com"
+            href="https://www.thelightideas.co.ke"
             target="_blank"
             rel="noreferrer"
-            className="text-gray-900 text-lg font-bold"
+            className="text-gray-900 font-bold hover:text-gray-900 "
           >
             Ventiqo
           </a>
@@ -60,19 +60,19 @@ export function Footer() {
           &copy; {CURRENT_YEAR} Made with{" "}
           <span className="text-red-500">♥</span> by{" "}
           <a
-            href="https://www.material-tailwind.com"
+            href="https://www.thelightideas.co.ke"
             target="_blank"
             rel="noreferrer"
-            className="text-gray-700 hover:underline"
+            className="text-gray-700 hover:text-gray-900"
           >
             Ventiqo
           </a>{" "}
           and{" "}
           <a
-            href="https://www.creative-tim.com"
+            href="https://www.thelightideas.co.ke"
             target="_blank"
             rel="noreferrer"
-            className="text-gray-700 hover:underline"
+            className="text-gray-700"
           >
             The Light Ideas
           </a>

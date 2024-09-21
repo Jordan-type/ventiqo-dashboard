@@ -3,7 +3,7 @@
 import React, { useState } from "react";
 import Link from "next/link";
 import Image from "next/image";
-import { AccountActivationForm } from "@/components/Forms/account-activation-form";
+import { AccountActivationForm } from "@/components/Forms/AuthForms/account-activation-form";
 
 
 export default function AccountActivation() {

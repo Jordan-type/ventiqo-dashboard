@@ -32,24 +32,18 @@ export default function UserSidebar({ className }: SidebarProps) {
     <aside
       className={cn(
         `relative  hidden h-screen flex-none border-r bg-card transition-[width] duration-500 md:block`,
-        !isMinimized ? "w-72" : "w-[72px]",
+        !isMinimized ? "w-60" : "w-[72px]",
         className,
       )}
     >
         <div className="hidden p-5 pt-10 lg:block">
         <Link href="/">
-          <svg
-            xmlns="http://www.w3.org/2000/svg"
-            viewBox="0 0 24 24"
-            fill="none"
-            stroke="currentColor"
-            strokeWidth="2"
-            strokeLinecap="round"
-            strokeLinejoin="round"
-            className="mr-2 h-6 w-6"
-          >
-            <path d="M15 6v12a3 3 0 1 0 3-3H6a3 3 0 1 0 3 3V6a3 3 0 1 0-3 3h12a3 3 0 1 0-3-3" />
-          </svg>
+        <Image
+            src={"/images/logo/ventiqo-white-logo.svg"}
+            alt="Ventiqo Logo"
+            width={40}
+            height={40}
+          />
           </Link>
         </div>
       <IconChevronsLeft
@@ -73,7 +67,16 @@ export default function UserSidebar({ className }: SidebarProps) {
                 }
                 return item;
               })} />
+              
           </div>
+          <div className="mt-3 space-y-1">
+          <h3 className="font-semibold mb-2">Favorite Locations</h3>
+          <ul className="space-y-1">
+            <li className="flex items-center"><span className="w-2 h-2 rounded-full bg-green-400 mr-2"></span> XD Club, Toronto</li>
+            <li className="flex items-center"><span className="w-2 h-2 rounded-full bg-purple-400 mr-2"></span> Avengars Club, LA</li>
+            <li className="flex items-center"><span className="w-2 h-2 rounded-full bg-pink-400 mr-2"></span> Super Stay, Lahore</li>
+          </ul>
+        </div>
         </div>
       </div>
     </aside>
