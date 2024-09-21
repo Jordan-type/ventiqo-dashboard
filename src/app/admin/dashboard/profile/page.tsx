@@ -1,4 +1,3 @@
-import Breadcrumb from "@/components/Breadcrumbs/Breadcrumb";
 import Image from "next/image";
 import { Metadata } from "next";
 import Link from "next/link";
@@ -14,7 +13,6 @@ export const metadata: Metadata = {
 export default async function Profile () {
     return (
     <div className="mx-auto max-w-242.5">
-        <Breadcrumb pageName="Profile" />
 
         <div className="overflow-hidden rounded-sm border border-stroke bg-white shadow-default dark:border-strokedark dark:bg-boxdark">
           <div className="relative z-20 h-35 md:h-65">
