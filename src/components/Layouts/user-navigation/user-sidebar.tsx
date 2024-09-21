@@ -67,7 +67,16 @@ export default function UserSidebar({ className }: SidebarProps) {
                 }
                 return item;
               })} />
+              
           </div>
+          <div className="mt-3 space-y-1">
+          <h3 className="font-semibold mb-2">Favorite Locations</h3>
+          <ul className="space-y-1">
+            <li className="flex items-center"><span className="w-2 h-2 rounded-full bg-green-400 mr-2"></span> XD Club, Toronto</li>
+            <li className="flex items-center"><span className="w-2 h-2 rounded-full bg-purple-400 mr-2"></span> Avengars Club, LA</li>
+            <li className="flex items-center"><span className="w-2 h-2 rounded-full bg-pink-400 mr-2"></span> Super Stay, Lahore</li>
+          </ul>
+        </div>
         </div>
       </div>
     </aside>

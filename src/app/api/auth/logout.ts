@@ -1,39 +1,41 @@
-import { NextApiRequest, NextApiResponse } from "next";
-import { destroyCookie } from 'nookies';
-import { getServerSession } from "next-auth";
-import { signOut } from "next-auth/react";
-import authConfig from "@/auth.config";
-
+import { NextApiRequest, NextApiResponse } from 'next';
+import { getSession, signOut } from "next-auth/react";
+import { VentiqoBackendAPI } from "@/constants/ventiqo-backend-api";
 
 export default async function handler(req: NextApiRequest, res: NextApiResponse) {
-  // Check if a session exists
-  const session = await getServerSession(req, res, authConfig);
+  if (req.method !== 'POST') {
+    // Ensure that the route only allows POST requests
+    return res.status(405).json({ success: false, message: 'Method Not Allowed' });
+  }
 
-  if (session) {
-    // If there is a session, destroy the session cookies
-    destroyCookie({ res }, 'next-auth.session-token');
+  try {
+    const session = await getSession({ req });
 
-    // Additional cleanup (e.g., clearing other cookies, etc.) can be done here
+    if (session) {
+      // Call backend sign-out API to clear server-side cookies
+      const response = await fetch(`${VentiqoBackendAPI}/auth/sign-out`, {
+        method: 'POST',
+        credentials: 'include', // Include cookies with request
+        headers: {
+          'Content-Type': 'application/json',
+          'Authorization': `Bearer ${session.accessToken}`, // Add accessToken to header if needed
+        },
+      });
 
-    // Redirect to the sign-in page or a custom page
-    res.redirect(`${process.env.NEXTAUTH_URL}/auth/signin`);
-  } else {
-    // If no session exists, just redirect to the sign-in page
-    res.redirect('/auth/signin');
+      if (!response.ok) {
+        return res.status(response.status).json({ success: false, message: 'Failed to sign out on the server.' });
+      }
+
+      // Clear client-side session
+      await signOut({ redirect: false });
+      
+      return res.status(200).json({ success: true, message: 'Signed out successfully!' });
+    } else {
+      // If there is no session found, return a successful response indicating no session
+      return res.status(200).json({ success: true, message: 'No session found, already signed out.' });
+    }
+  } catch (error) {
+    console.error("Logout API Error:", error);
+    return res.status(500).json({ success: false, message: 'An error occurred during sign out.' });
   }
 }
-
-
-// export default async (req: NextApiRequest, res: NextApiResponse) => {
-//   await signOut({ redirect: false });
-//   res.redirect(`${process.env.FRONTEND_URL}/auth/signin`);
-// };
-
-
-
-
-
-// export default function handler(req: NextApiRequest, res: NextApiResponse) {
-//   destroyCookie({ res }, 'next-auth.session-token');
-//   res.redirect('/auth/signin');
-// }
