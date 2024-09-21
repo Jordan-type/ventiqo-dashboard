@@ -1,16 +1,20 @@
-"use client";  // Add this line to make it a Client Component
+"use client";
 
 import React, { useEffect, useState } from 'react';
 import Image from 'next/image';
+import { MoreHorizontal } from 'lucide-react';
+import { useRouter } from 'next/navigation';
 import { Badge } from '@/components/ui/badge';
 import { Button } from '@/components/ui/button';
+import Loader from "@/components/common/Loader";
 import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuLabel, DropdownMenuTrigger } from '@/components/ui/dropdown-menu';
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from '@/components/ui/table';
-import { MoreHorizontal } from 'lucide-react';
-import { getAllEvents } from '@/config/APIConfig'; // Assuming this is the function to fetch events from the API
+
+import { getAllEvents } from '@/config/eventsAPI';
 
 const EventsTable: React.FC = () => {
-  const [events, setEvents] = useState<any[]>([]); // Use proper typing if the structure is known
+  const router = useRouter();
+  const [events, setEvents] = useState<any[]>([]);
   const [loading, setLoading] = useState<boolean>(true);
 
   useEffect(() => {
@@ -31,8 +35,16 @@ const EventsTable: React.FC = () => {
   }, []);
 
   if (loading) {
-    return <div>Loading events...</div>;
+    return (
+    <div className="flex justify-center items-center">
+      <Loader />
+    </div>
+    )
   }
+
+  const handleRowClick = (id: string) => {
+    router.push(`/admin/events/${id}`); // Push the _id as the eventId
+  };
 
   return (
     <Table>
@@ -53,13 +65,13 @@ const EventsTable: React.FC = () => {
       </TableHeader>
       <TableBody>
         {events.map((event) => (
-          <TableRow key={event._id}>
+          <TableRow key={event._id} onClick={() => handleRowClick(event._id)} className="cursor-pointer">
             <TableCell className="hidden sm:table-cell">
               <Image
                 alt="Event image"
                 className="aspect-square rounded-md object-cover"
                 height="64"
-                src={event.image || '/images/default-event-image.png'} // Fallback image if none is provided
+                src={event.image || '/images/default-event-image.png'}
                 width="64"
               />
             </TableCell>

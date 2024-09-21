@@ -9,6 +9,7 @@ import { AdminSidebarDashboardNav } from "@/components/Layouts/admin-navigation/
 import { useSidebar } from "@/hooks/useSidebar";
 import { navItems } from "@/constants/data";
 import { cn } from "@/lib/utils";
+import { handleLogout } from "@/utils/logout";
 
 type SidebarProps = {
   className?: string;
@@ -16,10 +17,6 @@ type SidebarProps = {
 
 export default function AdminSidebar({ className }: SidebarProps) {
   const { isMinimized, toggle } = useSidebar();
-
-  const handleLogout = () => {
-    signOut({ callbackUrl: "/auth/signin" }); // You can set a callback URL after logout
-  };
 
   const handleToggle = () => {
     toggle();

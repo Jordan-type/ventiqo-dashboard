@@ -3,6 +3,7 @@ import 'next-auth';
 declare module 'next-auth' {
   interface Session {
     accessToken?: string;
+    refreshToken?: string;
     user: {
       name?: string | null;
       email?: string | null;
@@ -10,6 +11,7 @@ declare module 'next-auth' {
       first_name?: string;
       last_name?: string;
       username?: string;
+      phone_number?: string;
       role?: string; 
        // Add your custom properties here
     };

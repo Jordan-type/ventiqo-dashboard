@@ -1,5 +1,6 @@
 import UserHeader from '@/components/Layouts/user-navigation/user-header';
 import UserSidebar from '@/components/Layouts/user-navigation/user-sidebar';
+import Footer from '@/components/Navbar/footer';
 
 import type { Metadata } from 'next';
 

@@ -11,7 +11,7 @@ import {
   DropdownMenuItem,
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
-import { RectangleStackIcon, UserCircleIcon, CommandLineIcon, Squares2X2Icon, XMarkIcon, Bars3Icon } from "@heroicons/react/24/solid";
+// import { RectangleStackIcon, UserCircleIcon, CommandLineIcon, Squares2X2Icon, XMarkIcon } from "@heroicons/react/24/solid"; // Bars3Icon
 
 interface NavItemProps {
   children: React.ReactNode;
@@ -35,20 +35,20 @@ function NavItem({ children, href }: NavItemProps) {
 const NAV_MENU = [
   {
     name: "Events",
-    icon: RectangleStackIcon,
+    // icon: RectangleStackIcon,
   },
   {
     name: "Features",
-    icon: UserCircleIcon,
+    // icon: UserCircleIcon,
   },
   {
     name: "About",
-    icon: Squares2X2Icon,
+    // icon: Squares2X2Icon,
     href: "",
   },
   {
     name: "Docs",
-    icon: CommandLineIcon,
+    // icon: CommandLineIcon,
     href: "",
   },
 ];
@@ -98,28 +98,28 @@ export function Navbar() {
             isScrolling ? "text-white" : "text-white"
           }`}
         >
-          {NAV_MENU.map(({ name, icon: Icon, href }) => (
+          {NAV_MENU.map(({ name,  href }) => ( // icon: Icon,
             <NavItem key={name} href={href}>
-              <Icon className="h-5 w-5" />
+              {/* <Icon className="h-5 w-5" /> */}
               <span>{name}</span>
             </NavItem>
           ))}
         </ul>
         <div className="hidden items-center gap-4 lg:flex">
           <Link  href="/auth/signin">
-            Log in
+            SignIn
           </Link>
           <Link href="/auth/signup" target="_blank">
             Get Started
           </Link>
         </div>
-        <DropdownMenu>
+        {/* <DropdownMenu>
           <DropdownMenuTrigger asChild>
             <Button variant="ghost" onClick={handleOpen} className="lg:hidden">
               {open ? (
-                <XMarkIcon strokeWidth={2} className="h-6 w-6" />
+                // <XMarkIcon strokeWidth={2} className="h-6 w-6" />
               ) : (
-                <Bars3Icon strokeWidth={2} className="h-6 w-6" />
+                // <Bars3Icon strokeWidth={2} className="h-6 w-6" />
               )}
             </Button>
           </DropdownMenuTrigger>
@@ -139,7 +139,7 @@ export function Navbar() {
               </Link>
             </div>
           </DropdownMenuContent>
-        </DropdownMenu>
+        </DropdownMenu> */}
       </div>
     </nav>
   );

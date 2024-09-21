@@ -1,7 +1,7 @@
 // import { Breadcrumbs } from '@/components/breadcrumbs';
 import PageContainer from '@/components/Layouts/page-container';
-import { columns } from '@/components/Tables/employee-tables/columns';
-import { EmployeeTable } from '@/components/Tables/employee-tables/employee-table';
+import { columns } from '@/components/Tables/employees-tables/columns';
+import { EmployeeTable } from '@/components/Tables/employees-tables/employee-table';
 import { buttonVariants } from '@/components/ui/button';
 import { Heading } from '@/components/ui/heading';
 import { Separator } from '@/components/ui/separator';

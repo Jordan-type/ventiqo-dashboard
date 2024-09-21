@@ -1,9 +1,11 @@
 import { NextAuthOptions } from 'next-auth';
+import { signOut as nextAuthSignOut } from 'next-auth/react';
 import CredentialsProvider from 'next-auth/providers/credentials';
 import GoogleProvider from 'next-auth/providers/google';
 import FacebookProvider from "next-auth/providers/facebook";
 import { VentiqoBackendAPI } from "@/constants/ventiqo-backend-api";
 
+// Interface for AuthResponse
 interface AuthResponse {
   success: boolean;
   message: string;
@@ -44,18 +46,53 @@ interface AuthResponse {
   };
 }
 
+// Function to check if the token is expired
+const isTokenExpired = (token: string | undefined): boolean => {
+  if (!token) return true;
+  const decodedToken = JSON.parse(atob(token.split('.')[1]));
+  const currentTime = Date.now() / 1000;
+  return decodedToken.exp < currentTime;
+};
+
+// Helper function to refresh access token
+async function refreshAccessToken(): Promise<{ accessToken: string; refreshToken: string }> {
+  try {
+    const response = await fetch(`${VentiqoBackendAPI}/auth/refresh-token`, {
+      method: 'GET',
+      credentials: 'include', // Include cookies
+    });
+
+    console.log(`Refresh token response: ${response.status} ${response.statusText}`);
+
+    if (!response.ok) {
+      throw new Error('Failed to refresh access token');
+    }
+
+    const data = await response.json();
+    console.log("New tokens received:", data);
+
+    return {
+      accessToken: data.accessToken,
+      refreshToken: data.refreshToken ?? '',
+    };
+  } catch (error) {
+    console.error('Error refreshing access token:', error);
+    throw error;
+  }
+}
+
 const authConfig: NextAuthOptions = {
   providers: [
     CredentialsProvider({
       id: "credentials",
       name: "Credentials",
       credentials: {
-        email: { label: "email", type: "text" },
+        email: { label: "Email", type: "text" },
         password: { label: "Password", type: "password" },
       },
       async authorize(credentials: any) {
         try {
-          const res = await fetch(`${VentiqoBackendAPI}/auth/sign-in`, {
+          const response = await fetch(`${VentiqoBackendAPI}/auth/sign-in`, {
             method: "POST",
             headers: {
               "Content-Type": "application/json",
@@ -66,16 +103,16 @@ const authConfig: NextAuthOptions = {
             }),
           });
 
-          if (!res.ok) {
-            const errorData = await res.json();
+          if (!response.ok) {
+            const errorData = await response.json();
+            console.error("Authentication error:", errorData);
             throw new Error(errorData.message || 'Authentication failed');
           }
 
-          const data: AuthResponse = await res.json();
-          console.log("credentials", data)
+          const data: AuthResponse = await response.json();
+          console.log("User logged in successfully:", data);
 
           if (data.success && data.user) {
-            console.log("User logged in successfully. User details:", data.user)
             return {
               ...data.user,
               accessToken: data.accessToken,
@@ -84,8 +121,9 @@ const authConfig: NextAuthOptions = {
           } else {
             throw new Error('Authentication failed');
           }
-        } catch (err: any) {
-          throw new Error(err.message || 'Internal server error');
+        } catch (error: any) {
+          console.error("Authorization error:", error);
+          throw new Error(error.message || 'Internal server error');
         }
       },
     }),
@@ -96,36 +134,47 @@ const authConfig: NextAuthOptions = {
         params: {
           prompt: "consent",
           access_type: "offline",
-          response_type: "code"
+          response_type: "code",
         }
       }
     }),
     FacebookProvider({
-      clientId: process.env.FACEBOOK_ID as string,
-      clientSecret: process.env.FACEBOOK_SECRET as string,
+      clientId: process.env.FACEBOOK_ID || "",
+      clientSecret: process.env.FACEBOOK_SECRET || "",
     }),
-    // Add other providers if necessary.....
   ],
   callbacks: {
     async jwt({ token, user }: any) {
       if (user) {
         token.accessToken = user.accessToken;
         token.refreshToken = user.refreshToken;
-        
         token.user = {
           ...user,
           email: user.email,
-          fullname: user.first_name + " " + user.last_name,
+          fullname: `${user.first_name} ${user.last_name}`,
           first_name: user.first_name,
           last_name: user.last_name,
           username: user.username,
+          phone_number: user.phone_number,
           role: user.role,
-        }
-
-        console.log("JWT Callback: token", token)
-        console.log("user", user)
+        };
+        console.log("JWT Callback: new token generated", token);
       } else {
-        console.log("JWT Callback on subsequent request: token", token);
+        console.log("JWT Callback: existing token", token);
+
+        // Check if the token is expired
+        if (isTokenExpired(token.accessToken) && token.refreshToken) {
+          console.log("JWT Callback: token expired, refreshing...");
+          try {
+            const refreshedToken = await refreshAccessToken();
+            token.accessToken = refreshedToken.accessToken;
+            token.refreshToken = refreshedToken.refreshToken || token.refreshToken;
+            console.log("JWT Callback: token refreshed", token);
+          } catch (error) {
+            console.error("JWT Callback: token refresh failed", error);
+            token.error = "RefreshTokenError";
+          }
+        }
       }
       return token;
     },
@@ -134,15 +183,51 @@ const authConfig: NextAuthOptions = {
       session.accessToken = token.accessToken;
       session.refreshToken = token.refreshToken;
 
-      console.log("Session Callback: session", session);
+      console.log("Session Callback: updated session", session);
       return session;
+    },
+  },
+  events: {
+    async signOut({ token }) {
+      try {
+        console.log('Sign-out event triggered:', token);
+
+        // Ensure token or session details are passed correctly
+        const accessToken = token?.accessToken;
+
+        if (!accessToken) {
+          console.error('No access token found for signing out.');
+          return;
+        }
+
+        // Call backend signOut API to invalidate tokens
+        const response = await fetch(`${VentiqoBackendAPI}/auth/sign-out`, {
+          method: 'POST',
+          credentials: 'include', // Include cookies for server-side logout
+          headers: {
+            'Content-Type': 'application/json',
+            'Authorization': `Bearer ${accessToken}`, // Send access token if needed
+          },
+        });
+
+        if (!response.ok) {
+          console.error('Failed to sign out on the server:', response.status, response.statusText);
+        } else {
+          console.log('Successfully signed out on the server');
+
+          // Optionally, clear client-side session
+          await nextAuthSignOut({ redirect: false });
+        }
+      } catch (error) {
+        console.error('Error during sign-out event:', error);
+      }
     },
   },
   debug: process.env.NODE_ENV === "development",
   secret: process.env.NEXTAUTH_SECRET || "your_generated_secret",
   session: {
     strategy: "jwt",
-    maxAge: 1 * 24 * 60 * 60, // 1 day // 30 days ToDo: get it from the expire token
+    maxAge: 24 * 60 * 60, // 1 day
   },
   pages: {
     signIn: "/auth/signin",

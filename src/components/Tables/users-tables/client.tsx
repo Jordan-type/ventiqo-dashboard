@@ -8,7 +8,7 @@ import { Separator } from '@/components/ui/separator';
 import { User } from '@/constants/data';
 import { Plus } from 'lucide-react';
 import { useRouter } from 'next/navigation';
-import { columns } from '@/components/Tables/user-tables/columns';
+import { columns } from '@/components/Tables/users-tables/columns';
 import { fetchUsers } from '@/config/userAPI';
 
 const UserClient = () => {
@@ -21,6 +21,7 @@ const UserClient = () => {
     const getUsers = async () => {
       try {
         const users = await fetchUsers();
+        console.log(users, "data");
         setData(users);
       } catch (error) {
         if (error instanceof Error) {
