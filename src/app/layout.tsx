@@ -6,11 +6,11 @@
 import '@uploadthing/react/styles.css';
 import Providers from '@/components/Layouts/providers';
 import { Toaster } from '@/components/ui/toaster/toaster';
+import 'mapbox-gl/dist/mapbox-gl.css';
 import "@/css/style.css";
 import React, { useEffect, useState } from "react";
 import Loader from "@/components/common/Loader";
 import { Inter } from 'next/font/google';
-
 
 const inter = Inter({ subsets: ['latin'] });
 
@@ -25,7 +25,6 @@ export default function RootLayout({
     setTimeout(() => setLoading(false), 1000);
   }, []);
 
-  // overflow-hidden removed it
 
   return (
     <html lang="en">
