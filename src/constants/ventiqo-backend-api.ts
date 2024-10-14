@@ -1,2 +1,2 @@
 // export const VentiqoBackendAPI:String = process.env.NEXT_PUBLIC_BASE_URL || "https://ventiqo-backend-api.onrender.com/api/v1/"
-export const VentiqoBackendAPI:String = process.env.NEXT_PUBLIC_BASE_URL || "https://6fc6-41-209-60-99.ngrok-free.app/api/v1"
+export const VentiqoBackendAPI:String = process.env.NEXT_PUBLIC_BASE_URL || "http://localhost:5000/api/v1/"

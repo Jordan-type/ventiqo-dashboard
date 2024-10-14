@@ -34,18 +34,21 @@ function NavItem({ children, href }: NavItemProps) {
 
 const NAV_MENU = [
   {
-    name: "Events",
+    name: "Explore Events",
     // icon: RectangleStackIcon,
+    href: "/events"
   },
   {
-    name: "Features",
-    // icon: UserCircleIcon,
-  },
-  {
-    name: "About",
+    name: "About Us",
     // icon: Squares2X2Icon,
     href: "",
   },
+  {
+    name: "Pricing",
+    // icon: UserCircleIcon,
+    href: "/pricing",
+  },
+
   {
     name: "Docs",
     // icon: CommandLineIcon,

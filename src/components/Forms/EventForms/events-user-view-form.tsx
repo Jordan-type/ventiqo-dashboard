@@ -8,9 +8,8 @@ import {
   CardTitle,
 } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
-import EventDetailsPopup from "@/components/Forms/EventForms/EventDetailsPopup";
-import OrderFormPopup from "../OrderForms/OrderFormPopup"; // Import the popup component
-import PaymentMethodForm from "../PaymentsForms/payment-methods-form";
+import EventDetailsPopup from "@/components/Forms/EventForms/event-details-popup";
+import OrderFormPopup from "../OrderForms/OrderFormPopup"; 
 import { getAllEvents } from "@/config/eventsAPI";
 
 type Ticket = {
@@ -27,11 +26,11 @@ type Event = {
   date: string;
   location: string;
   price: string;
-  startTime: string; // Add this
-  endTime: string;   // Add this
-  aboutEvent: string; // Add this
-  venueName: string; // Add this
-  tickets: Ticket[]; // Add this
+  startTime: string;
+  endTime: string;
+  aboutEvent: string;
+  venueName: string;
+  tickets: Ticket[];
   coordinates: [number, number];
   image: string;
 };
@@ -41,9 +40,8 @@ export default function EventsUserViewForm() {
   const [loading, setLoading] = useState<boolean>(true);
   const [selectedEvent, setSelectedEvent] = useState<Event | null>(null);
   const [showOrderForm, setShowOrderForm] = useState<boolean>(false);
-  const [selectedTicketType, setSelectedTicketType] = useState<string | null>(null); // Use string instead of Event
+  const [selectedTicketType, setSelectedTicketType] = useState<string | null>(null); 
   const [selectedEventForOrder, setSelectedEventForOrder] = useState<Event | null>(null);
-
 
   useEffect(() => {
     const fetchEvents = async () => {
@@ -57,16 +55,16 @@ export default function EventsUserViewForm() {
             return {
               id: event._id,
               title: event.title,
-              date: new Date(event.date).toLocaleDateString(), // Convert to a readable date format
-              startTime: event.startTime, // Ensure this is mapped
-              endTime: event.endTime,     // Ensure this is mapped
-              aboutEvent: event.aboutEvent, // Ensure this is mapped
-              venueName: event.venueName,   // Ensure this is mapped
-              location: `${event.venueName}, ${event.subCounty}, ${event.county}, ${event.country}`, // Construct location string
+              date: new Date(event.date).toLocaleDateString(),
+              startTime: event.startTime,
+              endTime: event.endTime,
+              aboutEvent: event.aboutEvent,
+              venueName: event.venueName,
+              location: `${event.venueName}, ${event.subCounty}, ${event.county}, ${event.country}`,
               price: event.tickets && event.tickets.length > 0
                 ? `$${event.tickets[0].price}`
                 : "N/A",
-              tickets: event.tickets, // Ensure this is mapped
+              tickets: event.tickets,
               coordinates: [longitude, latitude] as [number, number],
               image: event.image || '/images/default-event-image.png',
             };
@@ -83,17 +81,15 @@ export default function EventsUserViewForm() {
     fetchEvents();
   }, []);
   
-
-  
   const handleCardClick = (event: Event) => {
-    setSelectedEvent(event); // Show event details in the popup
+    setSelectedEvent(event);
   };
 
   const handleClosePopup = () => {
-    setSelectedEvent(null); // Close the popup
+    setSelectedEvent(null);
   };
 
-  const handleGetTicketClick = (event: Event, ticketType: string) => { // Accepts ticketType as a string
+  const handleGetTicketClick = (event: Event, ticketType: string) => {
     setSelectedEventForOrder(event);
     setSelectedTicketType(ticketType);
     setShowOrderForm(true);
@@ -108,15 +104,14 @@ export default function EventsUserViewForm() {
   }
 
   return (
-    <div className="mt-6">
-      <h2 className="mb-4 text-xl font-semibold">Popular Now</h2>
-      <div className="grid grid-cols-3 gap-6">
+    <div className="absolute bottom-0 left-0 w-full bg-gradient-to-t from-black via-transparent to-transparent p-4">
+      <h2 className="mb-2 text-lg font-semibold">Popular Now</h2>
+      <div className="grid grid-cols-2 gap-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 xl:grid-cols-6">
         {events.map((event) => (
-          <Card key={event.id} onClick={() => handleCardClick(event)}>
-            {/* Image at the top */}
+          <Card className="bg-white shadow-lg" key={event.id} onClick={() => handleCardClick(event)}>
             <div className="relative">
               <Image
-                className="h-32 w-full rounded-tl-lg rounded-tr-lg object-cover"
+                className="h-28 w-full rounded-t-lg object-cover"
                 src={event.image}
                 alt={event.title}
                 width={50}
@@ -124,45 +119,40 @@ export default function EventsUserViewForm() {
                 layout="responsive"
               />
             </div>
-            {/* Event details */}
-            <CardContent className="px-4 py-2">
+            <CardContent className="px-2 py-1">
               <div className="flex items-center justify-between text-xs">
                 <p>{event.date}</p>
                 <p>{event.startTime} - {event.endTime}</p>
               </div>
-              <CardTitle className="mt-1 text-base font-semibold text-gray-900">
+              <CardTitle className="mt-1 text-sm font-semibold text-gray-900">
                 {event.title}
               </CardTitle>
-              <div className="mt-1 flex items-center text-sm">
-                <MapPin className="mr-1 h-4 w-4" />
+              <div className="mt-1 flex items-center text-xs">
+                <MapPin className="mr-1 h-3 w-3" />
                 <p>{event.location}</p>
               </div>
             </CardContent>
-            {/* Price section */}
-            <CardFooter className="flex items-center justify-between border-t px-4 py-2">
-              <div className="text-sm font-semibold text-orange-500">
+            <CardFooter className="flex items-center justify-between border-t px-2 py-1">
+              <div className="text-xs font-semibold text-orange-500">
                 {event.price}
               </div>
-              <Button size="sm" className="rounded-md bg-orange-500 text-white"  onClick={(e) => {e.stopPropagation();  handleGetTicketClick(event, event.tickets[0].name); }}>
+              <Button size="sm" className="rounded-md bg-orange-500 text-white px-2 py-1" onClick={(e) => {e.stopPropagation(); handleGetTicketClick(event, event.tickets[0].name); }}>
                 Get a Ticket
               </Button>
             </CardFooter>
           </Card>
         ))}
       </div>
-      {/* Event details popup */}
       {selectedEvent && (
-        <EventDetailsPopup event={selectedEvent as Event} onClose={handleClosePopup} onGetTicket={(ticketType) => handleGetTicketClick(selectedEvent, ticketType)} />
+        <EventDetailsPopup event={selectedEvent} onClose={handleClosePopup} onGetTicket={(ticketType) => handleGetTicketClick(selectedEvent, ticketType)} />
       )}
-            {/* Order Form Popup */}
-            {showOrderForm && selectedEventForOrder && (
+      {showOrderForm && selectedEventForOrder && (
         <OrderFormPopup
           eventId={selectedEventForOrder.id}
           tickets={selectedEventForOrder.tickets}
           onClose={handleCloseOrderForm}
         />
       )}
-
     </div>
   );
 }

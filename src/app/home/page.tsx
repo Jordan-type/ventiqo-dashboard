@@ -8,11 +8,15 @@ import Footer from "../../components/Navbar/footer";
 
 // sections
 import Hero from "./components/hero";
-import SponsoredBy from "./components/sponsored-by";
-import Features from "./components/features";
-import EventContent from "./components/event-content";
-import OurStats from "./components/our-stats";
 import About from "./components/about";
+import OrganizerKeyFeatures from "./components/organiser-features"
+import WhyChooseUs from "./components/why-choose-us"
+import EventAttendees from "./components/event-attendees"
+import VentiqoCTA from "./components/ventiqo-cta"; 
+import OrganisersToFollow from "./components/organisers-to-follow"
+import EventContent from "./components/event-content";
+import SponsoredBy from "./components/sponsored-by";
+import OurStats from "./components/our-stats";
 import FAQ from "./components/faq";
 
 const Home = () => {
@@ -20,12 +24,16 @@ const Home = () => {
     <>
       <Navbar />
       <Hero />
-      <SponsoredBy />
-      <Features />
-      <EventContent />
-      <OurStats />
       <About />
-      <FAQ />
+      <OrganizerKeyFeatures />
+      <WhyChooseUs />
+      <EventAttendees />
+      <VentiqoCTA />
+      <OrganisersToFollow />
+            {/* <SponsoredBy /> */}
+      {/* <OurStats />
+
+      <FAQ /> */}
       <Footer />
     </>
   );
@@ -35,15 +43,9 @@ export default Home;
 
 
 // ## Inspiration
-
 // ## What it does
-
 // ## How we built it
-
 // ## Challenges we ran into
-
 // ## Accomplishments that we're proud of
-
 // ## What we learned
-
 // ## What's next for GPAccess
