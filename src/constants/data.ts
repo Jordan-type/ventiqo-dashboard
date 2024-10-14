@@ -1,5 +1,28 @@
+import { LucideIcon } from "lucide-react";
 import { NavItem, UserNavItem } from '@/types/nav-item';
 import { signOut } from "next-auth/react"; 
+
+export type Submenu = {
+  href: string;
+  label: string;
+  active: boolean;
+};
+
+// Main Menu Type
+export type Menu = {
+  href: string;
+  label: string;
+  active: boolean;
+  icon: LucideIcon; // Icon from Lucide
+  submenus: Submenu[];
+  onClick?: () => void;
+};
+
+// Menu Grouping Type
+export type Group = {
+  groupLabel: string;
+  menus: Menu[];
+};
 
 export type User = {
   id: string;  // Adjusted to match the ID format from API response
@@ -46,6 +69,7 @@ export type Employee = {
   job: string;
   profile_picture?: string | null; // Profile picture can be a string (URL) or null (if no picture)
 };
+
 
 export const navItems: NavItem[] = [
   {

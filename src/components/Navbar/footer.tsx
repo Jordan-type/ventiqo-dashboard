@@ -74,7 +74,7 @@ export function Footer() {
             rel="noreferrer"
             className="text-gray-700"
           >
-            The Light Ideas
+            The Light Ideas Labs
           </a>
           .
         </p>

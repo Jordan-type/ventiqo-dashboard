@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { CreditCard } from "lucide-react";
 import { useRouter } from "next/navigation";
 import { useSession } from "next-auth/react";
@@ -22,7 +22,7 @@ import {
   SelectValue,
 } from "@/components/ui/select";
 import { Icons } from "@/components/icons";
-import { initiateMpesaPayment } from "@/config/paymentAPI";
+import { initiateMpesaPayment, confirmMpesaPayment } from "@/config/paymentAPI";
 
 type Event = {
   id: string;
@@ -41,13 +41,22 @@ type PaymentMethodFormProps = {
 };
 
 const PaymentMethodForm: React.FC<PaymentMethodFormProps> = ({ event, onClose }) => {
+  const { data: session } = useSession();
   const [selectedPaymentMethod, setSelectedPaymentMethod] = useState<string>("card");
   const [mpesaPhoneNumber, setMpesaPhoneNumber] = useState<string>(""); // For storing Mpesa phone number
   const [loading, setLoading] = useState(false); // For loading state during payment
   const [error, setError] = useState<string | null>(null); // For error messages
   const [successMessage, setSuccessMessage] = useState<string | null>(null); // For success messages
 
+    // Set the phone number from session when available
+    useEffect(() => {
+      if (session?.user && session.user.phone_number) {
+        setMpesaPhoneNumber(session.user.phone_number);
+      }
+    }, [session]);
 
+
+// Handle Mpesa Payment Submission
 // Handle Mpesa Payment Submission
 const handleMpesaPayment = async () => {
   setLoading(true);
@@ -65,10 +74,45 @@ const handleMpesaPayment = async () => {
 
   if (response.success) {
     setSuccessMessage("Mpesa payment initiated successfully.");
+
+    // Extract the CheckoutRequestID from the response
+    const checkoutRequestId = response.data.body.CheckoutRequestID; // Updated line
+
+    if (checkoutRequestId) {
+      // Start polling to confirm payment status
+      pollPaymentStatus(checkoutRequestId);
+    } else {
+      setError("Failed to retrieve CheckoutRequestID. Please try again.");
+    }
   } else {
     setError(response.message || "Failed to initiate Mpesa payment.");
   }
 };
+
+  // Polling function to confirm payment status
+  const pollPaymentStatus = async (checkoutRequestId: string) => {
+    if (!checkoutRequestId) {
+      console.error("Invalid CheckoutRequestID provided for confirmation");
+      return;
+    }
+    const intervalId = setInterval(async () => {
+      try {
+        const result = await confirmMpesaPayment(checkoutRequestId);
+        if (result.success && result.data.ResultCode === 0) {
+          clearInterval(intervalId);
+          // Redirect to success page
+          // router.push("/payment-success");
+          } else if (result.success && result.data.ResultCode !== 0) {
+            clearInterval(intervalId);
+            setError("Payment was not successful. Please try again.");
+          }
+        } catch (error) {
+          console.error("Error while confirming payment:", error);
+          clearInterval(intervalId);
+          setError("An error occurred while confirming payment. Please try again.");
+      }
+    }, 5000); // Poll every 5 seconds
+  };
 
 const handleContinue = () => {
   if (selectedPaymentMethod === "mpesa") {
@@ -82,12 +126,6 @@ const handleContinue = () => {
     console.log("Proceeding with payment method:", selectedPaymentMethod);
   }
 };
-
-
-
-
-
-
 
 
   return (
@@ -233,7 +271,9 @@ const handleContinue = () => {
             )}
           </CardContent>
           <CardFooter>
-            <Button className="w-full">Continue</Button>
+          <Button className="w-full" onClick={handleContinue} disabled={loading}>
+              {loading ? "Processing..." : "Continue"}
+            </Button>
           </CardFooter>
         </Card>
         <button onClick={onClose} className="mt-4 text-red-500">Close</button>

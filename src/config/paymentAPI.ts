@@ -50,6 +50,12 @@ export const initiateMpesaPayment = async (
     }
 
     const data: MpesaPaymentResponse = await response.json();
+
+    console.log(
+      `Mpesa payment initiated successfully with response: ${JSON.stringify(data)}`
+    )
+
+
     return {
       success: true,
       data,
@@ -62,3 +68,43 @@ export const initiateMpesaPayment = async (
     };
   }
 };
+
+// Function to confirm the Mpesa payment request
+export const confirmMpesaPayment = async (checkoutRequestId: string): Promise<MpesaPaymentResponse> => {
+  try {
+    const accessToken = await getValidAccessToken();
+
+    if (!accessToken) {
+      throw new Error('No access token found. Please login again.');
+    }
+
+    const response = await fetch(`${VentiqoBackendAPI}/confirmPayment/${checkoutRequestId}`, {
+      method: 'GET',
+      headers: {
+        'Content-Type': 'application/json',
+        'Authorization': `Bearer ${accessToken}`, // Attach the access token
+      },
+    });
+
+    if (!response.ok) {
+      const errorData = await response.json();
+      return {
+        success: false,
+        message: errorData.message || 'Failed to confirm Mpesa payment',
+      };
+    }
+
+    const data: MpesaPaymentResponse = await response.json();
+    return {
+      success: true,
+      data,
+    };
+
+  } catch (error: any) {
+    return {
+      success: false,
+      message: error.message || 'An error occurred while confirming the payment',
+    };
+  }
+};
+
