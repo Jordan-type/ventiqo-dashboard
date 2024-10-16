@@ -1,11 +1,11 @@
 import React from "react";
-import { Button } from "@/components/ui/button"; // Assuming you have a Button component from Shadcn
+import { Button } from "@/components/ui/cta-button"; // Assuming you have a Button component from Shadcn
 import { cn } from "@/lib/utils"; // Utility for conditional class names
 
 const Hero: React.FC = () => {
   return (
     <section>
-      <div className="container">
+      <div className="container mt-10">
         {/* Left Side - Text Content */}
         <div className="grid items-center gap-8 lg:grid-cols-2">
           <div className="flex flex-col items-center py-32 text-center lg:mx-auto lg:items-start lg:px-0 lg:text-left">
@@ -19,7 +19,7 @@ const Hero: React.FC = () => {
             Discover, Plan, and Elevate Events with Ventiqo. From tailored recommendations for attendees to streamlined event management for organizers, we enhance every experience.
             </p>
             <div className="flex w-full flex-col justify-center gap-2 sm:flex-row lg:justify-start">
-              <Button variant="default" size="lg">
+              <Button className="bg-yellow-500 text-white px-6 py-2 hover:bg-yellow-500 transition" variant="default" size="lg">
                 Get Started
               </Button>
               <Button variant="secondary" size="lg">

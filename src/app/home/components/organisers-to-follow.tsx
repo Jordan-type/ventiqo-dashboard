@@ -7,27 +7,27 @@ const OrganisersToFollow = () => {
     {
       id: 1,
       name: "Millaz Productions",
-      logo: "/path/to/millaz-logo.png", // Update with actual image path
+      logo: "/images/org/millaz-logo.png", // Update with actual image path
     },
     {
       id: 2,
       name: "Phil-it Productions",
-      logo: "/path/to/phil-it-logo.png",
+      logo: "/images/org/phil-it-logo.png",
     },
     {
       id: 3,
       name: "Polkadot",
-      logo: "/path/to/polkadot-logo.png",
+      logo: "/images/org/polkadot-logo.png",
     },
     {
       id: 4,
       name: "Mara Foundation",
-      logo: "/path/to/mara-logo.png",
+      logo: "/images/org/mara-logo.png",
     },
   ];
 
   return (
-    <section className="py-16 bg-blue-50">
+    <section className="py-16 bg-blue-50 mt-20">
       <div className="container mx-auto">
         <div className="bg-blue-200 text-center rounded-t-lg p-8">
           <h2 className="text-2xl font-bold text-gray-900">Organisers to follow</h2>
