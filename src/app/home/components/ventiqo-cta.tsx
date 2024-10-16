@@ -2,7 +2,7 @@ import { Button } from "@/components/ui/button";
 
 const VentiqoCTA = () => {
   return (
-    <div className="flex flex-col items-center space-y-8">
+    <div className="flex flex-col items-center space-y-8 mt-20">
     <div className="flex space-x-8">
         <div className="relative bg-teal-600 text-white p-8 rounded-lg shadow-lg">
             <div className="absolute inset-0 border-2 border-teal-600 rounded-lg transform translate-x-2 translate-y-2"></div>

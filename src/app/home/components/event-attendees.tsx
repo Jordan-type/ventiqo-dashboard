@@ -4,7 +4,7 @@ import Image from "next/image";
 
 const EventAttendees: React.FC = () => {
   return (
-    <section className="bg-gradient-to-r to-blue-100 py-16 relative">
+    <section className="bg-gradient-to-r to-blue-100 py-16 relative mb-20">
       <div className="container mx-auto flex flex-col md:flex-row items-center justify-between gap-10 relative z-10">
         {/* Left Text Section */}
         <div className="flex flex-col w-full md:w-1/2 items-start justify-center space-y-5">

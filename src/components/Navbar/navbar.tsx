@@ -41,7 +41,7 @@ const NAV_MENU = [
   {
     name: "About Us",
     // icon: Squares2X2Icon,
-    href: "",
+    href: "about-us",
   },
   {
     name: "Pricing",
