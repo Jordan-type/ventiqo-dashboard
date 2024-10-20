@@ -11,8 +11,7 @@ export const metadata: Metadata = {
 const Admin = () => {
     return (
         <DefaultLayout>
-        <h1>Admin Page</h1>
-
+            <h1>Event Organizers Page</h1>
         </DefaultLayout>
     );
 }
