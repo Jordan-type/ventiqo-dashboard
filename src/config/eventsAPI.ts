@@ -165,6 +165,22 @@ export interface PaginatedEventsResponse {
   };
 }
 
+
+interface TicketSummaryResponse {
+  success: boolean;
+  message: string;
+  data: {
+    ticketSummary: {
+      ticketName: string;
+      totalTickets: number;
+      remainingTickets: number;
+      soldTickets: number;
+    }[];
+    totalRemainingTickets: number;
+    totalSoldTickets: number;
+  };
+}
+
 // create event details
 export const createEvent = async (eventDetails: dataEventDetails) => {
   try {
@@ -272,5 +288,27 @@ export const getEventsByCategory = async (category: string): Promise<PaginatedEv
   } catch (error) {
     console.error(`Error fetching events by category ${category}:`, error);
     // Handle error (e.g., show notification to the user)
+  }
+};
+
+
+// Function to get event ticket summary
+export const getEventTicketSummary = async (eventId: string): Promise<TicketSummaryResponse | undefined> => {
+  try {
+    const res = await fetch(`${VentiqoBackendAPI}/events/${eventId}/summary`, {
+      method: "GET",
+      headers: {
+        "Content-Type": "application/json",
+      },
+    });
+
+    if (!res.ok) {
+      throw new Error(`Error fetching event ticket summary: ${res.statusText}`);
+    }
+
+    const data: TicketSummaryResponse = await res.json();
+    return data;
+  } catch (error) {
+    console.error("Error fetching event ticket summary:", error);
   }
 };
