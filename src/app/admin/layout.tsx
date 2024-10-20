@@ -4,8 +4,8 @@ import AdminSidebar from '@/components/Layouts/admin-navigation/admin-sidebar';
 import type { Metadata } from 'next';
 
 export const metadata: Metadata = {
-  title: 'Next Shadcn Dashboard Starter',
-  description: 'Basic dashboard with Next.js and Shadcn'
+  title: 'Ventiqo Admin Dashboard',
+  description: 'Admin dashboard for Ventiqo: Manage events, users, payments, analytics, and platform settings. Get insights into event performance, sales, and attendee engagement with a user-friendly interface.'
 };
 
 export default function DashboardLayout({
